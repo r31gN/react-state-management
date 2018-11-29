@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-
-const UsersList = ({ users }) => (
-  <ul>
-    {users.map((user, index) => (
-      <li key={index}>{user}</li>
-    ))}
-  </ul>
-);
+import UsersList from './UsersList';
 
 const App = () => {
   const [user, setUser] = useState('');
