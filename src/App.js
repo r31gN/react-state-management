@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import UsersList from './UsersList';
+import { connect } from './maze';
+import List from './List';
 
-const App = () => {
+const App = ({ users, setGlobalValue }) => {
   const [user, setUser] = useState('');
-  const [users, setUsers] = useState([]);
 
   return (
-    <main
-      style={{
-        padding: '10rem 0 0 10rem'
-      }}
-    >
+    <div>
       <div
         style={{
           display: 'flex',
@@ -27,6 +23,7 @@ const App = () => {
             padding: '0 .75rem'
           }}
           type="text"
+          value={user}
           onChange={e => setUser(e.target.value)}
         />
         <button
@@ -38,16 +35,27 @@ const App = () => {
             padding: '0 1rem'
           }}
           onClick={() => {
-            const newUsers = [...users, user];
-            setUsers(newUsers);
+            const newUsers = [
+              ...users,
+              {
+                id: users.length + 1,
+                name: user
+              }
+            ];
+            setGlobalValue('users', newUsers);
+            setUser('');
           }}
         >
           Add
         </button>
       </div>
-      <UsersList users={users} />
-    </main>
+      <List data={users} displayAttribute="name" />
+    </div>
   );
 };
 
-export default App;
+const mapStateToProps = state => ({
+  users: state.users
+});
+
+export default connect(mapStateToProps)(App);
