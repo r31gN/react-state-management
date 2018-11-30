@@ -25,7 +25,6 @@ const createProvider = (initialState = {}) => ({ children }) => {
 
 const connect = mapStateToProps => Component => {
   const EnhancedComponent = props => {
-    console.log(Component.prototype.constructor.name);
     const { state, setGlobalValue } = useContext(Ctx);
     const values = mapStateToProps(state);
     return <Component {...props} {...values} setGlobalValue={setGlobalValue} />;
