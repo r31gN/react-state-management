@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { connect } from './maze';
 import List from './List';
 
-const App = ({ users, setGlobalValue }) => {
+const App = ({ users, setGlobalValue, ...rest }) => {
   const [user, setUser] = useState('');
 
   return (
-    <div>
+    <div {...rest}>
       <div
         style={{
           display: 'flex',
