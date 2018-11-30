@@ -24,10 +24,19 @@ const createProvider = (initialState = {}) => ({ children }) => {
 };
 
 const connect = mapStateToProps => Component => {
+  const MemoComponent = React.memo(Component);
+  let f = null;
+
   const EnhancedComponent = props => {
     const { state, setGlobalValue } = useContext(Ctx);
-    const values = mapStateToProps(state);
-    return <Component {...props} {...values} setGlobalValue={setGlobalValue} />;
+    f = f || setGlobalValue;
+    return (
+      <MemoComponent
+        {...props}
+        {...mapStateToProps(state)}
+        setGlobalValue={f}
+      />
+    );
   };
 
   return React.memo(EnhancedComponent);
