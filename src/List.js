@@ -8,4 +8,4 @@ const List = ({ data, displayAttribute, ...rest }) => (
   </ul>
 );
 
-export default List;
+export default React.memo(List);
