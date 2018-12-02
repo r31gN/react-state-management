@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 
 const Ctx = React.createContext();
 
+let f = null;
 const createProvider = (initialState = {}) => ({ children }) => {
   const [appState, setAppState] = useState(initialState);
 
@@ -11,11 +12,13 @@ const createProvider = (initialState = {}) => ({ children }) => {
       [key]: value
     });
 
+  f = f || setGlobalValue;
+
   return (
     <Ctx.Provider
       value={{
         state: appState,
-        setGlobalValue
+        setGlobalValue: f
       }}
     >
       {children}
@@ -25,21 +28,19 @@ const createProvider = (initialState = {}) => ({ children }) => {
 
 const connect = mapStateToProps => Component => {
   const MemoComponent = React.memo(Component);
-  let f = null;
 
   const EnhancedComponent = props => {
     const { state, setGlobalValue } = useContext(Ctx);
-    f = f || setGlobalValue;
     return (
       <MemoComponent
         {...props}
         {...mapStateToProps(state)}
-        setGlobalValue={f}
+        setGlobalValue={setGlobalValue}
       />
     );
   };
 
-  return React.memo(EnhancedComponent);
+  return EnhancedComponent;
 };
 
 export { createProvider, connect };
