@@ -2,7 +2,7 @@ import React, { useEffect, Suspense, lazy } from 'react';
 import { connect } from './maze';
 import List from './List';
 
-// Not much benefit, because the component `List` has already been imported
+// Not much benefit, because `List` has already been imported
 // It is useful as a demo though, for other component examples
 const LazyList = lazy(() => import('./List'));
 
