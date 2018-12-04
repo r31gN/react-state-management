@@ -11,13 +11,14 @@ const createProvider = (initialState = {}, effects = {}) => ({ children }) => {
 
     if (effectCb) {
       setAppState(prevState => {
-        console.group(`'${effectName}' update logs.`);
-        console.log(`Before state update: `, prevState);
-
         const newState = effectCb(prevState, value);
 
-        console.log(`After state update: `, newState);
-        console.groupEnd();
+        if (process.env.NODE_ENV === 'development') {
+          console.group(`'${effectName}' update logs.`);
+          console.log(`Before state update: `, prevState);
+          console.log(`After state update: `, newState);
+          console.groupEnd();
+        }
 
         return newState;
       });
