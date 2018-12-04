@@ -1,34 +1,38 @@
 import React, { useState, useContext } from 'react';
 
 const Ctx = React.createContext();
+let dispatch = null;
 
-let f = null;
-const createProvider = (initialState = {}) => ({ children }) => {
+const createProvider = (initialState = {}, effects = {}) => ({ children }) => {
   const [appState, setAppState] = useState(initialState);
 
-  const setGlobalValue = (key, value) =>
-    setAppState(prevState => {
-      console.group(`Update logs for key '${key}'.`);
-      console.log(`Before state update: `, prevState);
+  const _dispatch = (effectName, value) => {
+    const effectCb = effects[effectName];
 
-      const newState = {
-        ...prevState,
-        [key]: value
-      };
+    if (effectCb) {
+      setAppState(prevState => {
+        console.group(`'${effectName}' update logs.`);
+        console.log(`Before state update: `, prevState);
 
-      console.log(`After state update: `, newState);
-      console.groupEnd();
+        const newState = effectCb(prevState, value);
 
-      return newState;
-    });
+        console.log(`After state update: `, newState);
+        console.groupEnd();
 
-  f = f || setGlobalValue;
+        return newState;
+      });
+    } else {
+      console.error(`There is no '${effectName}' effect defined.`);
+    }
+  };
+
+  dispatch = dispatch || _dispatch;
 
   return (
     <Ctx.Provider
       value={{
         state: appState,
-        setGlobalValue: f
+        dispatch
       }}
     >
       {children}
@@ -40,12 +44,12 @@ const connect = mapStateToProps => Component => {
   const MemoComponent = React.memo(Component);
 
   const EnhancedComponent = props => {
-    const { state, setGlobalValue } = useContext(Ctx);
+    const { state, dispatch } = useContext(Ctx);
     return (
       <MemoComponent
         {...props}
         {...mapStateToProps(state)}
-        setGlobalValue={setGlobalValue}
+        dispatch={dispatch}
       />
     );
   };

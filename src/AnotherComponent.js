@@ -8,12 +8,12 @@ const LazyList = lazy(() => import('./List'));
 
 const Loading = React.memo(() => <p>Loading ...</p>);
 
-const AnotherComponent = ({ users, githubUsers, setGlobalValue, ...rest }) => {
+const AnotherComponent = ({ users, githubUsers, dispatch, ...rest }) => {
   useEffect(() => {
     (async () => {
       const res = await fetch('https://api.github.com/users');
       const json = await res.json();
-      setGlobalValue('githubUsers', json);
+      dispatch('SET_GITHUB_USERS', json);
     })();
   }, []);
 

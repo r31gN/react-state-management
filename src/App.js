@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from './maze';
 import List from './List';
 
-const App = ({ users, setGlobalValue, ...rest }) => {
+const App = ({ users, dispatch, ...rest }) => {
   const [user, setUser] = useState('');
 
   return (
@@ -35,14 +35,10 @@ const App = ({ users, setGlobalValue, ...rest }) => {
             padding: '0 1rem'
           }}
           onClick={() => {
-            const newUsers = [
-              ...users,
-              {
-                id: users.length + 1,
-                name: user
-              }
-            ];
-            setGlobalValue('users', newUsers);
+            dispatch('ADD_USER', {
+              id: users.length + 1,
+              name: user
+            });
             setUser('');
           }}
         >
