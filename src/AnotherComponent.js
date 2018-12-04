@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { connect } from './maze';
 import List from './List';
+
+const LazyList = lazy(() => import('./List'));
+
+const Loading = React.memo(() => <p>Loading ...</p>);
 
 const AnotherComponent = ({ users, githubUsers, setGlobalValue, ...rest }) => {
   useEffect(() => {
@@ -20,11 +24,9 @@ const AnotherComponent = ({ users, githubUsers, setGlobalValue, ...rest }) => {
         displayAttribute="name"
       />
       <p style={{ marginBottom: '2rem' }}>GitHub users:</p>
-      {githubUsers.length ? (
-        <List data={githubUsers} displayAttribute="login" />
-      ) : (
-        <p>Loading ...</p>
-      )}
+      <Suspense fallback={<Loading />}>
+        <LazyList data={githubUsers} displayAttribute="login" />
+      </Suspense>
     </div>
   );
 };
