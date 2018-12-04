@@ -5,11 +5,6 @@
   font: inherit;
 }
 
-html,
-body {
-  height: 100vh;
-}
-
 body {
   padding: 5rem;
 }
