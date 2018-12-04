@@ -8,12 +8,12 @@ const LazyList = lazy(() => import('./List'));
 
 const Loading = React.memo(() => <p>Loading ...</p>);
 
-const AnotherComponent = ({ users, githubUsers, dispatch, ...rest }) => {
+const AnotherComponent = ({ users, cnJokes, dispatch, ...rest }) => {
   useEffect(() => {
     (async () => {
-      const res = await fetch('https://api.github.com/users');
+      const res = await fetch('http://api.icndb.com/jokes/random/10');
       const json = await res.json();
-      dispatch('SET_GITHUB_USERS', json);
+      dispatch('SET_CN_JOKES', json.value);
     })();
   }, []);
 
@@ -25,9 +25,9 @@ const AnotherComponent = ({ users, githubUsers, dispatch, ...rest }) => {
         data={users}
         displayAttribute="name"
       />
-      <p style={{ marginBottom: '2rem' }}>GitHub users:</p>
+      <p style={{ marginBottom: '2rem' }}>Chuck Norris jokes:</p>
       <Suspense fallback={<Loading />}>
-        <LazyList data={githubUsers} displayAttribute="login" />
+        <LazyList data={cnJokes} displayAttribute="joke" />
       </Suspense>
     </div>
   );
@@ -35,7 +35,7 @@ const AnotherComponent = ({ users, githubUsers, dispatch, ...rest }) => {
 
 const mapStateToProps = state => ({
   users: state.users,
-  githubUsers: state.githubUsers
+  cnJokes: state.cnJokes
 });
 
 export default connect(mapStateToProps)(AnotherComponent);

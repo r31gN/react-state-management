@@ -11,16 +11,16 @@ const AppProvider = createProvider(
       id: index + 1,
       name: `Vlad ${index + 1}`
     })),
-    githubUsers: []
+    cnJokes: []
   },
   {
     ADD_USER: (prevState, newUser) => ({
       ...prevState,
       users: [...prevState.users, newUser]
     }),
-    SET_GITHUB_USERS: (prevState, githubUsers) => ({
+    SET_CN_JOKES: (prevState, cnJokes) => ({
       ...prevState,
-      githubUsers
+      cnJokes
     })
   }
 );
