@@ -4,9 +4,11 @@ import List from './List';
 
 const AnotherComponent = ({ users, githubUsers, setGlobalValue, ...rest }) => {
   useEffect(() => {
-    fetch('https://api.github.com/users')
-      .then(res => res.json())
-      .then(res => setGlobalValue('githubUsers', res));
+    (async () => {
+      const res = await fetch('https://api.github.com/users');
+      const json = await res.json();
+      setGlobalValue('githubUsers', json);
+    })();
   }, []);
 
   return (
