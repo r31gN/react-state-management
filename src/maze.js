@@ -7,10 +7,10 @@ const createProvider = (initialState = {}) => ({ children }) => {
   const [appState, setAppState] = useState(initialState);
 
   const setGlobalValue = (key, value) =>
-    setAppState({
-      ...appState,
+    setAppState(prevState => ({
+      ...prevState,
       [key]: value
-    });
+    }));
 
   f = f || setGlobalValue;
 
