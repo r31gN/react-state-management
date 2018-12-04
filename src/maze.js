@@ -7,10 +7,20 @@ const createProvider = (initialState = {}) => ({ children }) => {
   const [appState, setAppState] = useState(initialState);
 
   const setGlobalValue = (key, value) =>
-    setAppState(prevState => ({
-      ...prevState,
-      [key]: value
-    }));
+    setAppState(prevState => {
+      console.group(`Update logs for key '${key}'.`);
+      console.log(`Before state update: `, prevState);
+
+      const newState = {
+        ...prevState,
+        [key]: value
+      };
+
+      console.log(`After state update: `, newState);
+      console.groupEnd();
+
+      return newState;
+    });
 
   f = f || setGlobalValue;
 
