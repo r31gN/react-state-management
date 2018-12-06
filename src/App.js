@@ -35,9 +35,12 @@ const App = ({ users, dispatch, ...rest }) => {
             padding: '0 1rem'
           }}
           onClick={() => {
-            dispatch('ADD_USER', {
-              id: users.length + 1,
-              name: user
+            dispatch({
+              type: 'ADD_USER',
+              payload: {
+                id: users.length + 1,
+                name: user
+              }
             });
             setUser('');
           }}

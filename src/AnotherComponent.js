@@ -13,7 +13,10 @@ const AnotherComponent = ({ users, cnJokes, dispatch, ...rest }) => {
     (async () => {
       const res = await fetch('http://api.icndb.com/jokes/random/10');
       const json = await res.json();
-      dispatch('SET_CN_JOKES', json.value);
+      dispatch({
+        type: 'SET_CN_JOKES',
+        payload: json.value
+      });
     })();
   }, []);
 

@@ -1,51 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useReducer, useContext } from 'react';
+import { reducer, initialState } from './Reducers';
+
+const createStore = (reducer, initialState) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  if (process.env.NODE_ENV === 'development') {
+    console.group(`Update occured.`);
+    console.log(state);
+    console.groupEnd();
+  }
+
+  return { state, dispatch };
+};
 
 const Ctx = React.createContext();
-let dispatch = null;
 
-const createProvider = (initialState = {}, effects = {}) => ({ children }) => {
-  const [appState, setAppState] = useState(initialState);
-
-  const _dispatch = (effectName, value) => {
-    const effectCb = effects[effectName];
-
-    if (effectCb) {
-      setAppState(prevState => {
-        const newState = effectCb(prevState, value);
-
-        if (process.env.NODE_ENV === 'development') {
-          console.group(`'${effectName}' update logs.`);
-          console.log(`Before state update: `, prevState);
-          console.log(`After state update: `, newState);
-          console.groupEnd();
-        }
-
-        return newState;
-      });
-    } else {
-      console.error(`There is no '${effectName}' effect defined.`);
-    }
-  };
-
-  dispatch = dispatch || _dispatch;
-
-  return (
-    <Ctx.Provider
-      value={{
-        state: appState,
-        dispatch
-      }}
-    >
-      {children}
-    </Ctx.Provider>
-  );
+const createProvider = () => ({ children }) => {
+  const store = createStore(reducer, initialState);
+  return <Ctx.Provider value={store}>{children}</Ctx.Provider>;
 };
+
+const AppProvider = createProvider();
 
 const connect = mapStateToProps => Component => {
   const MemoComponent = React.memo(Component);
 
   const EnhancedComponent = props => {
     const { state, dispatch } = useContext(Ctx);
+
     return (
       <MemoComponent
         {...props}
@@ -58,4 +40,4 @@ const connect = mapStateToProps => Component => {
   return EnhancedComponent;
 };
 
-export { createProvider, connect };
+export { AppProvider, connect };
