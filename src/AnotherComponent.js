@@ -8,13 +8,13 @@ const LazyList = lazy(() => import('./List'));
 
 const Loading = React.memo(() => <p>Loading ...</p>);
 
-const AnotherComponent = ({ users, cnJokes, dispatch, ...rest }) => {
+const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
   useEffect(() => {
     (async () => {
       const res = await fetch('http://api.icndb.com/jokes/random/10');
       const json = await res.json();
       dispatch({
-        type: 'SET_CN_JOKES',
+        type: 'SET_JOKES',
         payload: json.value
       });
     })();
@@ -30,7 +30,7 @@ const AnotherComponent = ({ users, cnJokes, dispatch, ...rest }) => {
       />
       <p style={{ marginBottom: '2rem' }}>Chuck Norris jokes:</p>
       <Suspense fallback={<Loading />}>
-        <LazyList data={cnJokes} displayAttribute="joke" />
+        <LazyList data={jokes} displayAttribute="joke" />
       </Suspense>
     </div>
   );
@@ -38,7 +38,7 @@ const AnotherComponent = ({ users, cnJokes, dispatch, ...rest }) => {
 
 const mapStateToProps = state => ({
   users: state.users,
-  cnJokes: state.cnJokes
+  jokes: state.jokes
 });
 
 export default connect(mapStateToProps)(AnotherComponent);
