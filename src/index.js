@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createProvider } from 'simpply';
-import appReducer from './Reducers';
+import systemStorage from './SystemEntities';
 import App from './App';
 import AnotherComponent from './AnotherComponent';
 import './index.css';
 
-const AppProvider = createProvider(appReducer);
+const AppProvider = createProvider(systemStorage);
 
 ReactDOM.render(
   <AppProvider>
