@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from './maze';
+import { connect } from 'simpply';
 import List from './List';
 
 const App = ({ users, dispatch, ...rest }) => {

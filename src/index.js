@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createProvider } from './maze';
+import { createProvider } from 'simpply';
 import appReducer from './Reducers';
 import App from './App';
 import AnotherComponent from './AnotherComponent';

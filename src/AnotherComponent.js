@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react';
-import { connect } from './maze';
+import { connect } from 'simpply';
 import List from './List';
 
 // Not much benefit, because `List` has already been imported
