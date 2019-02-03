@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createProvider } from 'simpply';
-import systemStorage from './SystemEntities';
+import systemStorage from './StorageEntities';
 import App from './App';
 import AnotherComponent from './AnotherComponent';
 import './index.css';

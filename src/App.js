@@ -38,7 +38,6 @@ const App = ({ users, dispatch, ...rest }) => {
             dispatch({
               type: 'ADD_USER',
               payload: {
-                id: users.length + 1,
                 name: user
               }
             });
