@@ -13,6 +13,7 @@ const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
     (async () => {
       const res = await fetch('http://api.icndb.com/jokes/random/10');
       const json = await res.json();
+
       dispatch({
         type: 'SET_JOKES',
         payload: json.value
@@ -23,7 +24,11 @@ const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
   return (
     <div {...rest}>
       <p style={{ marginBottom: '2rem' }}>Local users:</p>
-      <List style={{ marginBottom: '2rem' }} data={users} displayAttribute="name" />
+      <List
+        style={{ marginBottom: '2rem' }}
+        data={users}
+        displayAttribute="name"
+      />
       <p style={{ marginBottom: '2rem' }}>Chuck Norris jokes:</p>
       <Suspense fallback={<Loading />}>
         <LazyList data={jokes} displayAttribute="joke" />
