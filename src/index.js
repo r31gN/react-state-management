@@ -6,7 +6,9 @@ import App from './App';
 import AnotherComponent from './AnotherComponent';
 import './index.css';
 
-const AppProvider = createProvider(systemStorage);
+const AppProvider = createProvider(systemStorage, {
+  logging: false
+});
 
 ReactDOM.render(
   <AppProvider>

@@ -19,7 +19,7 @@ const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
         payload: json.value
       });
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div {...rest}>
