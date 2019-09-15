@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { connect } from 'simpply';
 import List from './List';
 
@@ -9,15 +9,23 @@ const LazyList = lazy(() => import('./List'));
 const Loading = React.memo(() => <p>Loading ...</p>);
 
 const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
-  useEffect(() => {
-    (async () => {
-      const res = await fetch('http://api.icndb.com/jokes/random/10');
-      const json = await res.json();
+  const [error, setError] = useState(null);
 
-      dispatch({
-        type: 'SET_JOKES',
-        payload: json.value
-      });
+  useEffect(() => {
+    setError(null);
+
+    (async () => {
+      try {
+        const res = await fetch('http://api.icndb.com/jokes/random/10');
+        const json = await res.json();
+
+        dispatch({
+          type: 'SET_JOKES',
+          payload: json.value
+        });
+      } catch (e) {
+        setError(e.message);
+      }
     })();
   }, [dispatch]);
 
@@ -30,9 +38,13 @@ const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
         displayAttribute="name"
       />
       <p style={{ marginBottom: '2rem' }}>Chuck Norris jokes:</p>
-      <Suspense fallback={<Loading />}>
-        <LazyList data={jokes} displayAttribute="joke" />
-      </Suspense>
+      {!error ? (
+        <Suspense fallback={<Loading />}>
+          <LazyList data={jokes} displayAttribute="joke" />
+        </Suspense>
+      ) : (
+        <p>{error}</p>
+      )}
     </div>
   );
 };

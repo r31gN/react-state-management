@@ -7,7 +7,7 @@ import AnotherComponent from './AnotherComponent';
 import './index.css';
 
 const AppProvider = createProvider(systemStorage, {
-  logging: false
+  logging: true
 });
 
 ReactDOM.render(

@@ -5,6 +5,6 @@ const effects = {
 };
 
 export default {
-  initialState: [],
+  initialState: null,
   effects
 };
