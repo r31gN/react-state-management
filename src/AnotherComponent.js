@@ -1,12 +1,11 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { connect } from 'simpply';
+import Loading from './Loading';
 import List from './List';
 
 // Not much benefit, because `List` has already been imported
 // It is useful as a demo though, for other component examples
 const LazyList = lazy(() => import('./List'));
-
-const Loading = React.memo(() => <p>Loading ...</p>);
 
 const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
   const [error, setError] = useState(null);

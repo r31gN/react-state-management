@@ -1,8 +1,9 @@
 import React from 'react';
+import Loading from './Loading';
 
 const List = ({ data, displayAttribute, ...rest }) => {
   if (!data) {
-    return <p>Fetching data...</p>;
+    return <Loading />;
   }
 
   return (
