@@ -1,6 +1,6 @@
 # react-state-management
 
-State management in React using [`simpply`](https://github.com/r31gN/simpply).
+State management in React using [`simpply`](https://github.com/vladzelinschi/simpply).
 
 ### Installation & usage
 

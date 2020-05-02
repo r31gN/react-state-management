@@ -20,7 +20,7 @@ const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
 
         dispatch({
           type: 'SET_JOKES',
-          payload: json.value
+          payload: json.value,
         });
       } catch (e) {
         setError(e.message);
@@ -48,9 +48,9 @@ const AnotherComponent = ({ users, jokes, dispatch, ...rest }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   users: state.users,
-  jokes: state.jokes
+  jokes: state.jokes,
 });
 
 export default connect(mapStateToProps)(AnotherComponent);

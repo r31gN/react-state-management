@@ -4,5 +4,5 @@ import { createSystemStorage } from 'simpply';
 
 export default createSystemStorage({
   users,
-  jokes
+  jokes,
 });

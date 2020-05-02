@@ -11,7 +11,7 @@ const App = ({ users, dispatch, ...rest }) => {
         style={{
           display: 'flex',
           alignItems: 'center',
-          marginBottom: '2rem'
+          marginBottom: '2rem',
         }}
       >
         <label style={{ marginRight: '1rem' }}>Add user:</label>
@@ -20,11 +20,11 @@ const App = ({ users, dispatch, ...rest }) => {
             height: '2rem',
             border: '1px solid #eee',
             marginRight: '1rem',
-            padding: '0 .75rem'
+            padding: '0 .75rem',
           }}
           type="text"
           value={user}
-          onChange={e => setUser(e.target.value)}
+          onChange={(e) => setUser(e.target.value)}
         />
         <button
           style={{
@@ -32,14 +32,14 @@ const App = ({ users, dispatch, ...rest }) => {
             color: '#fff',
             border: 'none',
             height: '2rem',
-            padding: '0 1rem'
+            padding: '0 1rem',
           }}
           onClick={() => {
             dispatch({
               type: 'ADD_USER',
               payload: {
-                name: user
-              }
+                name: user,
+              },
             });
             setUser('');
           }}
@@ -52,8 +52,8 @@ const App = ({ users, dispatch, ...rest }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  users: state.users
+const mapStateToProps = (state) => ({
+  users: state.users,
 });
 
 export default connect(mapStateToProps)(App);
